@@ -22,6 +22,29 @@ app.use('/api/products', productRoutes);
 
 module.exports = app;
 
-fetch("http://localhost:3000/api/products")
-  .then(res => console.log(res));
+////////////////////////////////
+
+const newCard = document.createElement("a");
+let card = document.getElementById("items");
+
+card.appendChild(newCard);
+
+function show() {
+  fetch("http://localhost:3000/api/products")
+    .then(function (res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function (value) {
+      document
+        .getElementById("items")
+
+    })
+
+}
+
+
+
+
 
