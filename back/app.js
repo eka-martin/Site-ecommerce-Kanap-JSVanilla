@@ -24,25 +24,25 @@ module.exports = app;
 
 ////////////////////////////////
 
-const newCard = document.createElement("a");
-let card = document.getElementById("items");
+// const newCard = document.createElement("a");
+// let card = document.getElementById("items");
 
-card.appendChild(newCard);
+// card.appendChild(newCard);
 
-function show() {
-  fetch("http://localhost:3000/api/products")
-    .then(function (res) {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then(function (value) {
-      document
-        .getElementById("items")
+// function show() {
+//   fetch("http://localhost:3000/api/products")
+//     .then(function (res) {
+//       if (res.ok) {
+//         return res.json();
+//       }
+//     })
+//     .then(function (value) {
+//       document
+//         .getElementById("items")
 
-    })
+//     })
 
-}
+// }
 
 
 
