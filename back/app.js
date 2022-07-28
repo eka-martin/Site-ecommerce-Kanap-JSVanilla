@@ -24,36 +24,3 @@ module.exports = app;
 
 ////////////////////////////////
 
-// https://developer.mozilla.org/en-US/docs/Web/API/Response/json
-
-fetch('http://localhost:3000/api/products')
-    .then((response) => {
-        return response.json();
-    })
-    .then((data) => {
-        for (const product of data.products) {
-            const listItem = document.createElement('li');
-            listItem.appendChild(
-                document.createElement('strong')
-            ).textContent = product.Name;
-            listItem.append(
-                ` can be found in ${product.Location
-                }. Cost: `
-            );
-            listItem.appendChild(
-                document.createElement('strong')
-            ).textContent = `£${product.Price}`;
-            myList.appendChild(listItem);
-        }
-    })
-    .catch(console.error);
-
-
-
-
-
-
-
-
-
-
