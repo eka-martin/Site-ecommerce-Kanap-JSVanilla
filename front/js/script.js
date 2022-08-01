@@ -6,12 +6,11 @@ fetch('http://localhost:3000/api/products')
         return response.json();
     })
     .then((data) => {
-        console.log('test2', data);
+        console.log(data);
         let elt = document.getElementById('items');
         elt.classList.add('items');
         for (const product of data) {
             const lien = document.createElement('a');
-            lien.href = 'product.html?id=' + product._id;
             const art = document.createElement('article');
             const name = document.createElement('h3');
             name.innerHTML = product.name;
@@ -26,10 +25,17 @@ fetch('http://localhost:3000/api/products')
             art.appendChild(des);
             art.appendChild(image);
             des.classList.add('productDescription');
+            name.classList.add('productName');
+            lien.href = 'product.html?id=' + product._id;
+
 
         }
     })
     .catch(console.error);
+
+
+
+
 
 
 
