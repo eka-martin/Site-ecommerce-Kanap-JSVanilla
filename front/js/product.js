@@ -33,19 +33,21 @@ fetch(`http://localhost:3000/api/products/${id}`)
     })
     .then((data) => {
         console.log(data);
-        let elt = document.querySelector('item');
-        const art = document.createElement('article');
+        // let elt = document.querySelector('.item');
+        // const art = document.createElement('article');
 
 
-        const name = document.createElement('h1');
+        const name = document.getElementById('title');
         name.innerHTML = data.name;
-        const des = document.createElement('p');
+        const des = document.getElementById('description');
         des.innerHTML = data.description;
+        const prix = document.getElementById('price');
+        prix.innerHTML = data.price;
 
-
-        elt.appendChild(art);
-        art.appendChild(name);
-        art.appendChild(des);
+        // elt.appendChild(art);
+        // art.appendChild(name);
+        // art.appendChild(des);
+        // art.appendChild(prix);
 
 
 
