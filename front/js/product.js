@@ -47,7 +47,7 @@ btn_envoyerPanier.addEventListener('click', (e) => {
 // let optionProduit = {
 //             id_produit:
 //     color:
-//            quantite:
+//            quantite: quantity;
 
 // }
 
