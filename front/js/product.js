@@ -27,11 +27,13 @@ fetch(`http://localhost:3000/api/products/${id}`)
         div.appendChild(image);
         const clr = document.getElementById('colors');
         // const colors = data.colors;
-        // console.log(colors);
-        for (let color in data.colors) {
+        // console.log(data.colors);
+        for (let color of data.colors) {
+            // console.log(color);
             let opt = document.createElement('option');
+            opt.text = color; // it gives a name of color
+            opt.value = color; // it gives a order in array
             clr.appendChild(opt);
-            opt.value = `${color}`;
 
         }
 
@@ -42,36 +44,40 @@ fetch(`http://localhost:3000/api/products/${id}`)
 const btn_envoyerPanier = document.getElementById('addToCart');
 btn_envoyerPanier.addEventListener('click', (e) => {
     e.preventDefault();
+
+    let optionProduit = {
+        id_produit: id,
+        color: document.getElementById('colors').selectedOptions[0].value,
+        quantite: document.getElementById('quantity').value,
+
+    }
+    console.log(optionProduit);
+
+    // https://fullstackheroes.com/tutorials/javascript/local-storage/
+
+    let produitEnregistreDansLocalStorage = JSON.parce(localStorage.getItem('produit'));
+    if (produitEnregistreDansLocalStorage) {
+        produitEnregistreDansLocalStorage.push(optionProduit);
+        localStorage.setItem('produit', JSON.stringify(produitEnregistreDansLocalStorage));
+
+        console.log(produitEnregistreDansLocalStorage);
+    }
+    else {
+        produitEnregistreDansLocalStorage = [];
+        produitEnregistreDansLocalStorage.push(optionProduit);
+        localStorage.setItem('produit', JSON.stringify(produitEnregistreDansLocalStorage));
+
+        console.log(produitEnregistreDansLocalStorage);
+
+    }
 })
 
-// let optionProduit = {
-//             id_produit:
-//     color:
-//            quantite: quantity;
-
-// }
 
 
 
 
 
-    // if (search_params.has('id')) {
 
-//     console.log(search_params.get('id'))
-// }
-
-
-// let url = new URL(window.location.href);
-// let search_params = url.searchParams;
-// console.log(search_params.get('id'));
-
-// let response = fetch('http://localhost:3000/api/service/${id}');
-// let response = fetch('http://localhost:3000/api/products/{product-ID}');
-
-// let response = await fetch(`http://localhost:3000/api/products/${id}`)
-//    .then((response) => {
-//        return response.json();
-//    })
 
 
 //https://stackoverflow.com/questions/54268951/react-fetchapi-how-to-take-data-from-related-json-by-id

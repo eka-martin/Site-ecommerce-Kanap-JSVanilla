@@ -12,18 +12,19 @@ fetch('http://localhost:3000/api/products')
         for (const product of data) {
             const lien = document.createElement('a');
             const art = document.createElement('article');
+            const image = document.createElement('img');
+            image.src = product.imageUrl;
+            image.alt = product.altTxt;
             const name = document.createElement('h3');
             name.innerHTML = product.name;
             const des = document.createElement('p');
             des.innerHTML = product.description;
-            const image = document.createElement('img');
-            image.src = product.imageUrl;
-            image.alt = product.altTxt;
             lien.appendChild(art);
+            art.appendChild(image);
             art.appendChild(name);
             elt.appendChild(lien);
             art.appendChild(des);
-            art.appendChild(image);
+
             des.classList.add('productDescription');
             name.classList.add('productName');
             lien.href = 'product.html?id=' + product._id;
