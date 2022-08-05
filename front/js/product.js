@@ -37,9 +37,12 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
         }
 
-
     })
     .catch(console.error);
+
+
+
+
 
 const btn_envoyerPanier = document.getElementById('addToCart');
 btn_envoyerPanier.addEventListener('click', (e) => {
@@ -51,25 +54,14 @@ btn_envoyerPanier.addEventListener('click', (e) => {
         quantite: document.getElementById('quantity').value,
 
     }
-    console.log(optionProduit);
+    // console.log(optionProduit);
 
     // https://fullstackheroes.com/tutorials/javascript/local-storage/
 
-    let produitEnregistreDansLocalStorage = JSON.parce(localStorage.getItem('produit'));
-    if (produitEnregistreDansLocalStorage) {
-        produitEnregistreDansLocalStorage.push(optionProduit);
-        localStorage.setItem('produit', JSON.stringify(produitEnregistreDansLocalStorage));
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(optionProduit);
+    localStorage.setItem('cart', JSON.stringify(cart));
 
-        console.log(produitEnregistreDansLocalStorage);
-    }
-    else {
-        produitEnregistreDansLocalStorage = [];
-        produitEnregistreDansLocalStorage.push(optionProduit);
-        localStorage.setItem('produit', JSON.stringify(produitEnregistreDansLocalStorage));
-
-        console.log(produitEnregistreDansLocalStorage);
-
-    }
 })
 
 
