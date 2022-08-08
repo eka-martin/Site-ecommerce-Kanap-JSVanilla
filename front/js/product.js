@@ -56,11 +56,11 @@ btn_envoyerPanier.addEventListener('click', (e) => {
     }
     // console.log(optionProduit);
 
-    // https://fullstackheroes.com/tutorials/javascript/local-storage/
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(optionProduit);
-    localStorage.setItem('cart', JSON.stringify(cart));
+
+    let product = JSON.parse(localStorage.getItem('product')) || [];
+    product.push(optionProduit);
+    localStorage.setItem('product', JSON.stringify(product));
 
 })
 
