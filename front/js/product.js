@@ -49,20 +49,27 @@ btn_envoyerPanier.addEventListener('click', (e) => {
     e.preventDefault();
 
     let optionProduit = {
-        id_produit: id,
+        idProduit: id,
         color: document.getElementById('colors').selectedOptions[0].value,
         quantite: document.getElementById('quantity').value,
 
+    };
+
+    let produitInCart = [];
+
+
+    if (localStorage.getItem('product') !== null) {
+        produitInCart = JSON.parse(localStorage.getItem('product'));
     }
-    // console.log(optionProduit);
 
+    produitInCart.push(optionProduit);
+    localStorage.setItem('product', JSON.stringify(produitInCart));
 
-
-    let product = JSON.parse(localStorage.getItem('product')) || [];
-    product.push(optionProduit);
-    localStorage.setItem('product', JSON.stringify(product));
+    // for mozilla
+    // window.location.href = "cart.html";
 
 })
+
 
 
 
