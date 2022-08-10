@@ -7,7 +7,7 @@ let localStor = JSON.parse(localStorage.getItem('product'));
 console.table(localStor);
 // let cart = document.querySelector('.cart');
 
-for (let item in localStor) {
+for (let item of localStor) {
 
     let itemId = item.idProduit;
     let itemColor = item.color;
@@ -19,8 +19,6 @@ for (let item in localStor) {
             return response.json();
         })
         .then((data) => {
-            const products = data;
-
 
             const produit = document.createElement('article');
             const cart_in = document.querySelector('#cart__items')
@@ -31,8 +29,8 @@ for (let item in localStor) {
 
             const img_div = document.createElement('div');
             const image = document.createElement('img');
-            image.src = products.imageUrl;
-            image.alt = products.altTxt;
+            image.src = data.imageUrl;
+            image.alt = data.altTxt;
             produit.appendChild(img_div);
             image.appendChild(img_div);
             img_div.classList.add('cart__item__img');
@@ -46,15 +44,15 @@ for (let item in localStor) {
 
             const nameProduct = document.createElement('h2');
             des_div.appendChild(nameProduct);
-            nameProduct.innerHTML = products.name;
+            nameProduct.innerHTML = data.name;
 
             const colorProduct = document.createElement('p');
             des_div.appendChild(colorProduct);
-            colorProduct.innerHTML = localStor[item].color;
+            colorProduct.innerHTML = itemColor;
 
             const priceProduct = document.createElement('p');
             des_div.appendChild(priceProduct);
-            priceProduct.innerHTML = products.price;
+            priceProduct.innerHTML = data.price;
 
             const setting_div = document.createElement('div');
             cont_div.appendChild(setting_div);
@@ -66,7 +64,7 @@ for (let item in localStor) {
 
             const quantityProduct = document.createElement('p');
             q_div.appendChild(quantityProduct);
-            quantityProduct.innerHTML = "Qté : " + localStor[item].quantite;
+            quantityProduct.innerHTML = "Qté : " + itemQuantity;
 
             const set_del_div = document.createElement('div');
             setting_div.appendChild(set_del_div);
