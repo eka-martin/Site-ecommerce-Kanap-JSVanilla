@@ -51,12 +51,13 @@ btn_envoyerPanier.addEventListener('click', (e) => {
     let optionProduit = {
         idProduit: id,
         color: document.getElementById('colors').selectedOptions[0].value,
-        quantite: document.getElementById('quantity').value,
+        quantity: document.getElementById('quantity').value,
 
     };
 
-    let produitInCart = [];
 
+
+    let produitInCart = [];
 
     if (localStorage.getItem('product') !== null) {
         produitInCart = JSON.parse(localStorage.getItem('product'));
@@ -64,6 +65,29 @@ btn_envoyerPanier.addEventListener('click', (e) => {
 
     produitInCart.push(optionProduit);
     localStorage.setItem('product', JSON.stringify(produitInCart));
+
+    //-------------------------------------------------------------------------
+    // let product = JSON.parse(localStorage.getItem("product"));
+
+    // if (localStorage.getItem('product') !== null) {
+    //     let foundProduct = product.find(product => (product.id === id));
+    //     console.log(foundProduct);
+    //     if (product != null && foundProduct !== undefined) {
+    //         let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
+    //         foundProduct.quantity = addQuantity;
+    //         console.log(addQuantity);
+    //         localStorage.setItem("product", JSON.stringify(product));
+    //     } else {
+    //         let product = [];
+    //         product.push(optionProduit);
+    //         localStorage.setItem('product', JSON.stringify(product));
+    //     }
+
+    // }
+
+
+
+
 
     // for mozilla
     // window.location.href = "cart.html";
