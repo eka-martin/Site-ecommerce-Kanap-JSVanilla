@@ -22,8 +22,8 @@ fetch(`http://localhost:3000/api/products/${id}`)
         prix.innerHTML = data.price;
         const div = document.querySelector('.item__img')
         let image = document.createElement('img');
-        image.src = "../images/logo.png";
-        image.alt = "Photographie d'un canapé";
+        image.src = data.imageUrl;
+        image.alt = data.altTxt;
         div.appendChild(image);
         const clr = document.getElementById('colors');
         // const colors = data.colors;
@@ -67,31 +67,41 @@ btn_envoyerPanier.addEventListener('click', (e) => {
     // localStorage.setItem('product', JSON.stringify(produitInCart));
 
     //-------------------------------------------------------------------------
-    let products = JSON.parse(localStorage.getItem("product"));
 
-    if (localStorage.getItem('product') !== null) {
+    let products = JSON.parse(localStorage.getItem('product'));
+
+    if (products !== null) {
         let foundProduct = products.find(product => (product.idProduit === id));
         console.log(foundProduct);
 
-        if (products != null && foundProduct !== undefined) {
-            let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
-            foundProduct.quantity = addQuantity;
-            console.log(addQuantity);
-            localStorage.setItem("product", JSON.stringify(product));
-        } else {
-            let product = [];
-            product.push(optionProduit);
-            localStorage.setItem('product', JSON.stringify(product));
-        }
 
+
+        // if (products != null && foundProduct !== undefined) {
+        //     let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
+        //     foundProduct.quantity = addQuantity;
+        //     console.log(addQuantity);
+        //     localStorage.setItem("product", JSON.stringify(product));
+        // } else {
+        //     products.push(optionProduit);
+        //     localStorage.setItem("product", JSON.stringify(products));
+        // }
+
+
+    } else {
+
+        products.push(optionProduit);
+        localStorage.setItem('product', JSON.stringify(products));
+        console.log(products);
     }
 
 
 
 
 
-    // for mozilla
-    // window.location.href = "cart.html";
+
+
+    //     // for mozilla
+    //     // window.location.href = "cart.html";
 
 })
 
