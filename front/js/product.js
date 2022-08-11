@@ -57,33 +57,34 @@ btn_envoyerPanier.addEventListener('click', (e) => {
 
 
 
-    let produitInCart = [];
-
-    if (localStorage.getItem('product') !== null) {
-        produitInCart = JSON.parse(localStorage.getItem('product'));
-    }
-
-    produitInCart.push(optionProduit);
-    localStorage.setItem('product', JSON.stringify(produitInCart));
-
-    //-------------------------------------------------------------------------
-    // let product = JSON.parse(localStorage.getItem("product"));
+    // let produitInCart = [];
 
     // if (localStorage.getItem('product') !== null) {
-    //     let foundProduct = product.find(product => (product.id === id));
-    //     console.log(foundProduct);
-    //     if (product != null && foundProduct !== undefined) {
-    //         let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
-    //         foundProduct.quantity = addQuantity;
-    //         console.log(addQuantity);
-    //         localStorage.setItem("product", JSON.stringify(product));
-    //     } else {
-    //         let product = [];
-    //         product.push(optionProduit);
-    //         localStorage.setItem('product', JSON.stringify(product));
-    //     }
-
+    //     produitInCart = JSON.parse(localStorage.getItem('product'));
     // }
+
+    // produitInCart.push(optionProduit);
+    // localStorage.setItem('product', JSON.stringify(produitInCart));
+
+    //-------------------------------------------------------------------------
+    let products = JSON.parse(localStorage.getItem("product"));
+
+    if (localStorage.getItem('product') !== null) {
+        let foundProduct = products.find(product => (product.idProduit === id));
+        console.log(foundProduct);
+
+        if (products != null && foundProduct !== undefined) {
+            let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
+            foundProduct.quantity = addQuantity;
+            console.log(addQuantity);
+            localStorage.setItem("product", JSON.stringify(product));
+        } else {
+            let product = [];
+            product.push(optionProduit);
+            localStorage.setItem('product', JSON.stringify(product));
+        }
+
+    }
 
 
 
