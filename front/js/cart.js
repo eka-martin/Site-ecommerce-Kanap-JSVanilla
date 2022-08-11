@@ -26,6 +26,7 @@ for (let item of localStor) {
             produit.setAttribute('data-id', itemId);
             produit.setAttribute('data-color', itemColor);
 
+            //image
             const img_div = document.createElement('div');
             const image = document.createElement('img');
             image.src = data.imageUrl;
@@ -45,13 +46,16 @@ for (let item of localStor) {
             des_div.appendChild(nameProduct);
             nameProduct.innerHTML = data.name;
 
+            //color
             const colorProduct = document.createElement('p');
             des_div.appendChild(colorProduct);
             colorProduct.innerHTML = itemColor;
 
+            //prix, on ajoute class pour pouvoir recupere le prix pour "Total"
             const priceProduct = document.createElement('p');
             des_div.appendChild(priceProduct);
-            priceProduct.innerHTML = data.price * itemQuantity + ' €';
+            priceProduct.classList = "product__price"
+            priceProduct.innerHTML = data.price + ' €';
 
 
             const setting_div = document.createElement('div');
@@ -62,6 +66,7 @@ for (let item of localStor) {
             setting_div.appendChild(q_div);
             q_div.classList.add('cart__item__content__settings__quantity');
 
+            //quantite
             const quantityProduct = document.createElement('p');
             q_div.appendChild(quantityProduct);
             quantityProduct.innerHTML = "Qté : " + itemQuantity;
@@ -93,39 +98,32 @@ for (let item of localStor) {
 
 
 
-            function countTotalInCart() {
-                let arrayOfPrice = [];
-                let totalPrice = document.getElementById("totalPrice");
+            //TotalPrice
+            // On récupère la quantité totale
+            let elementsQuantity = document.getElementsByClassName('itemQuantity');
+            let myLength = elementsQuantity.length;
+            totalQuantity = 0;
 
-                // On push chaque prix du DOM dans un tableau
-                let productPriceAccordingToQuantity = document.querySelectorAll(".price");
-                for (let price in productPriceAccordingToQuantity) {
-                    arrayOfPrice.push(productPriceAccordingToQuantity[price].innerHTML);
-                }
-
-                // On enlève les undefined du tableau
-                arrayOfPrice = arrayOfPrice.filter((el) => {
-                    return el != undefined;
-                });
-
-                // Transformer en nombre chaque valeur du tableau
-                arrayOfPrice = arrayOfPrice.map((x) => parseFloat(x));
-
-                // Additionner les valeurs du tableau pour avoir le prix total
-                const reducer = (acc, currentVal) => acc + currentVal;
-                arrayOfPrice = arrayOfPrice.reduce(reducer);
-
-                // Affichage du prix avec formatage €
-                totalPrice.innerText = `${(arrayOfPrice = new Intl.NumberFormat(
-                    "fr-FR",
-                    {
-                        style: "currency",
-                        currency: "EUR",
-                    }
-                ).format(arrayOfPrice))}`;
+            for (let i = 0; i < myLength; i++) {
+                totalQuantity += elementsQuantity[i].valueAsNumber;
             }
 
+            let productTotalQuantity = document.getElementById('totalQuantity');
+            productTotalQuantity.innerHTML = totalQuantity;
 
+
+            // On récupère le prix total
+            let elementPrice = document.getElementsByClassName("product__price");
+
+            totalPrice = 0;
+            for (let i = 0; i < myLength; i++) {
+                let price = parseInt(elementPrice[i].innerHTML.split(" €")[0]);
+                totalPrice += (elementsQuantity[i].valueAsNumber * price);
+
+            }
+
+            let productTotalPrice = document.getElementById('totalPrice');
+            productTotalPrice.innerHTML = totalPrice;
 
 
         })
