@@ -135,12 +135,12 @@ for (let item of localStor) {
                     event.preventDefault()
 
                     //Je selectionne l'élément à modifier selon son Id et sa couleur
-                    let deleteId = productLocalStorage[k].id;
-                    let deleteColor = productLocalStorage[k].color;
+                    let deleteId = localStor[k].id;
+                    let deleteColor = localStor[k].color;
 
-                    productLocalStorage = productLocalStorage.filter(
+                    localStor = localStor.filter(
                         (element) => element.id !== deleteId || element.color !== deleteColor);
-                    localStorage.setItem("basket", JSON.stringify(productLocalStorage));
+                    localStorage.setItem("product", JSON.stringify(localStor));
 
                     location.reload();
                     alert("Votre article a bien été supprimé.")

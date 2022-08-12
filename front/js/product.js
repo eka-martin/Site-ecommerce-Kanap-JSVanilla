@@ -70,29 +70,33 @@ btn_envoyerPanier.addEventListener('click', (e) => {
 
     let products = JSON.parse(localStorage.getItem('product'));
 
-    if (products !== null) {
-        let foundProduct = products.find(product => (product.idProduit === id));
-        console.log(foundProduct);
+    // if (products !== null) {
+    //     let foundProduct = products.find(product => (product.idProduit === id && product.color === document.getElementById('colors').selectedOptions[0].value));
+    //     console.log(foundProduct);
+
+    //console.log('bzz');
 
 
-
-        // if (products != null && foundProduct !== undefined) {
-        //     let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
-        //     foundProduct.quantity = addQuantity;
-        //     console.log(addQuantity);
-        //     localStorage.setItem("product", JSON.stringify(product));
-        // } else {
-        //     products.push(optionProduit);
-        //     localStorage.setItem("product", JSON.stringify(products));
-        // }
-
-
+    if (products != null && foundProduct !== undefined) {
+        let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
+        foundProduct.quantity = addQuantity;
+        console.log(addQuantity);
+        console.log('bzz');
+        localStorage.setItem("product", JSON.stringify(products));
     } else {
-
         products.push(optionProduit);
-        localStorage.setItem('product', JSON.stringify(products));
-        console.log(products);
+        localStorage.setItem("product", JSON.stringify(products));
+
     }
+
+
+    // } else {
+    //     products = [];
+    //     products.push(optionProduit);
+    //     localStorage.setItem('product', JSON.stringify(products));
+    //     console.log(products);
+
+    // }
 
 
 
