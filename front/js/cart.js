@@ -92,9 +92,29 @@ for (let item of localStor) {
             buttonEmptyCart.classList.add("deleteItem");
             buttonEmptyCart.innerText = "Supprimer";
 
+
+            let deleteItem = document.querySelectorAll(".deleteItem");
+
+            for (let k = 0; k < deleteItem.length; k++) {
+                deleteItem[k].addEventListener("click", (event) => {
+                    event.preventDefault()
+
+                    //Je selectionne l'élément à modifier selon son Id et sa couleur
+                    let deleteId = localStor[k].id;
+                    let deleteColor = localStor[k].color;
+
+                    localStor = localStor.filter(
+                        (element) => element.id !== deleteId || element.color !== deleteColor);
+                    localStorage.setItem("product", JSON.stringify(localStor));
+
+                    location.reload();
+                    alert("Votre article a bien été supprimé.")
+
+
+                })
+            }
+
             // La modification la quantité d'un produit dans le panier
-
-
 
             let itemModif = document.querySelectorAll(".itemQuantity");
 
@@ -115,40 +135,9 @@ for (let item of localStor) {
                     localStorage.setItem("product", JSON.stringify(localStor));
 
                     location.reload();// rafraichir la  page
-                    // alert("votre panier est à jour.")
 
                 })
             }
-
-
-
-            //----------------------------------------------------
-            // buttonEmptyCart.addEventListener("click", () => {
-            //     localStorage.clear();
-
-            // })
-            //------------------------------------------------------------------------------------------
-            let deleteItem = document.querySelectorAll(".deleteItem");
-
-            for (let k = 0; k < deleteItem.length; k++) {
-                deleteItem[k].addEventListener("click", (event) => {
-                    event.preventDefault()
-
-                    //Je selectionne l'élément à modifier selon son Id et sa couleur
-                    let deleteId = localStor[k].id;
-                    let deleteColor = localStor[k].color;
-
-                    localStor = localStor.filter(
-                        (element) => element.id !== deleteId || element.color !== deleteColor);
-                    localStorage.setItem("product", JSON.stringify(localStor));
-
-                    location.reload();
-                    alert("Votre article a bien été supprimé.")
-
-
-                })//fin addEventListener
-            }
-
 
             //TotalPrice
             // On récupère la quantité totale
@@ -182,3 +171,23 @@ for (let item of localStor) {
         .catch(console.error);
 
 }
+
+// --------------FORMULAIRE--------------------------S
+//saisir les coordonnées puis de confirmer la commande
+// déclaration de contact et products 
+let contact = {
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    email: "",
+};
+
+
+
+//----------------------------------------------------
+// buttonEmptyCart.addEventListener("click", () => {
+//     localStorage.clear();
+
+// })
+//------------------------------------------------------------------------------------------
