@@ -1,11 +1,13 @@
 // https://www.youtube.com/watch?v=uR3r3GJvQDY
 // https://www.youtube.com/watch?v=pRkHOD_nkH4
-// 
 
+
+//parsing an object JSON 
 let localStor = JSON.parse(localStorage.getItem('product'));
 console.table(localStor);
 // let cart = document.querySelector('.cart');
 
+//inerating localStorage
 for (let item of localStor) {
 
     let itemId = item.idProduit;
@@ -107,9 +109,7 @@ for (let item of localStor) {
                         (element) => element.id !== deleteId || element.color !== deleteColor);
                     localStorage.setItem("product", JSON.stringify(localStor));
 
-                    location.reload();
-                    alert("Votre article a bien été supprimé.")
-
+                    location.reload();// rafraichir la  page 
 
                 })
             }
@@ -172,9 +172,10 @@ for (let item of localStor) {
 
 }
 
-// --------------FORMULAIRE--------------------------S
+// --------------FORMULAIRE--------------------------
 //saisir les coordonnées puis de confirmer la commande
 // déclaration de contact et products 
+//https://www.youtube.com/watch?v=CreEhp8I-XA&list=PLeHV46kDFIhK6NlpLJqLxjVanTWMast_8&index=13
 let contact = {
     firstName: "",
     lastName: "",
@@ -183,8 +184,192 @@ let contact = {
     email: "",
 };
 
+let formulaire = document.querySelector('.cart__order__form input[type= "submit"]');
+let inputs = document.querySelector(".cart__order__form__question");
+
+let firstName = document.querySelector("#firstName");
+let lastName = document.querySelector("#lastName");
+let address = document.querySelector("#address");
+let email = document.querySelector("#email");
+let city = document.querySelector("#city");
+
+let firstNameErrorMsg = document.querySelector("#firstNameErrorMsg");
+let lastNameErrorMsg = document.querySelector("#lastNameErrorMsg");
+let addressErrorMsg = document.querySelector("#addressErrorMsg");
+let emailErrorMsg = document.querySelector("#emailErrorMsg");
+let cityErrorMsg = document.querySelector("#cityErrorMsg");
+
+//Création des expressions régulières
+let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
+let letterRegExp = new RegExp("^[a-zA-Zàâäéèêëïîôöùûüç ,.'-]+$");
+let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
 
 
+let submit = document.querySelector("#order");
+
+////condition avec RegExp et return des valeur boléennes 
+/////////firstName/////////
+firstName.addEventListener("input", function () {
+    validFirstName(this);
+});
+
+const validFirstName = function (inputFirstName) {
+    //déclaration de la validation sur faux
+    let valid = false;
+    //test la regex
+
+    if (letterRegExp.test(inputFirstName.value)) {
+        //si il n'y a pas de message d'erreur valid ok
+        firstNameErrorMsg.textContent = "";
+        valid = true;
+    } else {
+        //si il y a un message d'erreur valide reste false
+        firstNameErrorMsg.textContent = "le prénom doit avoir 3 lettres minimum et pas de caractère spéciaux ou chiffres";
+        //on retourne le résultat de valid pour chaque champ
+        valid = false;
+    }
+    return valid;
+};
+/////////lastName/////////
+lastName.addEventListener("input", function () {
+    //parametre 'this'   s'agit de inpit  
+    validlastName(this);
+});
+
+const validlastName = function (inputlastName) {
+    let valid = false;
+
+    if (letterRegExp.test(inputlastName.value)) {
+        lastNameErrorMsg.textContent = "";
+        valid = true;
+    } else {
+        lastNameErrorMsg.textContent = "le nom doit avoir 3 lettres minimum et pas de caractère spéciaux ou chiffres";
+        valid = false;
+    }
+    return valid;
+};
+
+/////////adresse/////////
+address.addEventListener("input", function () {
+    //parametre 'this'   s'agit de inpit  
+    validAddress(this);
+});
+
+const validAddress = function (inputAddress) {
+    let valid = false;
+
+    if (addressRegExp.test(inputAddress.value)) {
+        addressErrorMsg.textContent = "";
+        valid = true;
+    } else {
+        addressErrorMsg.textContent = "veuillez rentrer une adresse valide, max 50 caractères";
+        valid = false;
+    }
+    return valid;
+};
+/////////city/////////
+city.addEventListener("input", function () {
+    //parametre 'this'   s'agit de inpit  
+    validCity(this);
+});
+
+const validCity = function (inputCity) {
+    let valid = false;
+
+    if (letterRegExp.test(inputCity.value)) {
+        cityErrorMsg.textContent = "";
+        valid = true;
+    } else {
+        cityErrorMsg.textContent = "veuillez rentrer le nom de votre ville ou village sans le code postal";
+        valid = false;
+    }
+    return valid;
+};
+
+/////////email/////////
+email.addEventListener("input", function () {
+    //parametre 'this'   s'agit de inpit  
+    validEmail(this);
+});
+
+const validEmail = function (inputEmail) {
+    let valid = false;
+
+    if (emailRegExp.test(inputEmail.value)) {
+        emailErrorMsg.textContent = "";
+        valid = true;
+    } else {
+        emailErrorMsg.textContent = "Email non valide, l'exemple canape@monmail.com";
+        valid = false;
+    }
+    return valid;
+};
+
+//------------------------------------------------------------
+//------------------------Button------------------------------
+//------------------------------------------------------------
+
+let products = [];
+
+let ordeButton = document.querySelector("#order").addEventListener("click", (e) => {
+    e.preventDefault();
+    //if one of condition is false we cannot create a contact || OR
+    if (
+        letterRegExp.test(firstName.value) == false ||
+        letterRegExp.test(lastName.value) == false ||
+        addressRegExp.test(address.value) == false ||
+        letterRegExp.test(city.value) == false ||
+        emailRegExp.test(email.value) == false
+    ) {
+        window.alert("Certains champs du formulaire sont manquants");
+    } else if (
+        firstName.value === "" ||
+        lastName.value === "" ||
+        address.value === "" ||
+        city.value === "" ||
+        email.value === ""
+    ) {
+        window.alert("Merci de remplir tout les champs");
+    } else {
+        //creatind a contact in LocalStorage
+        localStorage.setItem("contact", JSON.stringify(contact));
+
+
+        //adding a condition to get sure that there are products in a cart
+        if (localStor && localStor.length) {
+            for (let articleSelect of localStor) {
+                products.push(articleSelect.id)
+            };
+
+            let order = {
+                contact: contact,
+                products: products,
+            };
+
+            //fetch with POST 
+            //using a methode http body 
+
+            fetch("http://localhost:3000/api/products/order", {
+                method: "POST",
+                body: JSON.stringify(order),
+                headers: {
+                    "Accept": "application/json",
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    let orderId = data.orderId;
+                    window.location.assign("confirmation.html?id=" + orderId)
+
+                });
+            //if cart is empty     
+        } else {
+            alert("Votre panier est vide");
+            location.reload();
+        }
+    }
+});
 //----------------------------------------------------
 // buttonEmptyCart.addEventListener("click", () => {
 //     localStorage.clear();

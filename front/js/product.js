@@ -1,12 +1,13 @@
 
+// getting an URL with id of product
 let url = new URL(window.location.href);
 let search_params = url.searchParams;
 
-
+//getting an ID of product
 const id = url.searchParams.get('id');
 console.log(id);
 
-
+//making a request to API using an ID of product
 fetch(`http://localhost:3000/api/products/${id}`)
     .then((response) => {
         return response.json();
@@ -42,18 +43,50 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
 
 
-
+// ----------------------------------------------------------
+//------------------Adding a product to a cart---------------
+// ----------------------------------------------------------
 
 const btn_envoyerPanier = document.getElementById('addToCart');
 btn_envoyerPanier.addEventListener('click', (e) => {
     e.preventDefault();
-
+    //Creating an object with values
     let optionProduit = {
         idProduit: id,
         color: document.getElementById('colors').selectedOptions[0].value,
         quantity: document.getElementById('quantity').value,
 
     };
+
+
+    //------------------------------------------------------
+    //creating a product in localStorage
+    //------------------------------------------------------
+
+    let products = JSON.parse(localStorage.getItem('product'));
+
+    if (products !== null) {
+        let foundProduct = products.find(product => (product.idProduit === id && product.color === document.getElementById('colors').selectedOptions[0].value));
+        console.log(foundProduct);
+
+        //console.log('bzz');
+
+
+        if (products != null && foundProduct !== undefined) {
+            let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
+            foundProduct.quantity = addQuantity;
+            console.log(addQuantity);
+            //console.log('bzz');
+            localStorage.setItem("product", JSON.stringify(products));
+        } else {
+            products.push(optionProduit);
+            localStorage.setItem("product", JSON.stringify(products));
+            //console.log('prr');
+
+        }
+
+    }
+
 
     // let produitInCart = [];
 
@@ -63,34 +96,6 @@ btn_envoyerPanier.addEventListener('click', (e) => {
 
     // produitInCart.push(optionProduit);
     // localStorage.setItem('product', JSON.stringify(produitInCart));
-
-    //-------------------------------------------------------------------------
-
-    let products = JSON.parse(localStorage.getItem('product'));
-
-    if (products !== null) {
-        let foundProduct = products.find(product => (product.idProduit === id && product.color === document.getElementById('colors').selectedOptions[0].value));
-        console.log(foundProduct);
-
-        console.log('bzz');
-
-
-        if (products != null && foundProduct !== undefined) {
-            let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
-            foundProduct.quantity = addQuantity;
-            console.log(addQuantity);
-            console.log('bzz');
-            localStorage.setItem("product", JSON.stringify(products));
-        } else {
-            products.push(optionProduit);
-            localStorage.setItem("product", JSON.stringify(products));
-            console.log('prr');
-
-        }
-
-    }
-
-
 
 
 
