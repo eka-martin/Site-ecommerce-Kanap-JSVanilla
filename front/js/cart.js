@@ -309,67 +309,67 @@ const validEmail = function (inputEmail) {
 //------------------------Button------------------------------
 //------------------------------------------------------------
 
-let products = [];
+// let products = [];
 
-let ordeButton = document.querySelector("#order").addEventListener("click", (e) => {
-    e.preventDefault();
-    //if one of condition is false we cannot create a contact || OR
-    if (
-        letterRegExp.test(firstName.value) == false ||
-        letterRegExp.test(lastName.value) == false ||
-        addressRegExp.test(address.value) == false ||
-        letterRegExp.test(city.value) == false ||
-        emailRegExp.test(email.value) == false
-    ) {
-        window.alert("Certains champs du formulaire sont manquants");
-    } else if (
-        firstName.value === "" ||
-        lastName.value === "" ||
-        address.value === "" ||
-        city.value === "" ||
-        email.value === ""
-    ) {
-        window.alert("Merci de remplir tout les champs");
-    } else {
-        //creatind a contact in LocalStorage
-        localStorage.setItem("contact", JSON.stringify(contact));
+// let ordeButton = document.querySelector("#order").addEventListener("click", (e) => {
+//     e.preventDefault();
+//     //if one of condition is false we cannot create a contact || OR
+//     if (
+//         letterRegExp.test(firstName.value) == false ||
+//         letterRegExp.test(lastName.value) == false ||
+//         addressRegExp.test(address.value) == false ||
+//         letterRegExp.test(city.value) == false ||
+//         emailRegExp.test(email.value) == false
+//     ) {
+//         window.alert("Certains champs du formulaire sont manquants");
+//     } else if (
+//         firstName.value === "" ||
+//         lastName.value === "" ||
+//         address.value === "" ||
+//         city.value === "" ||
+//         email.value === ""
+//     ) {
+//         window.alert("Merci de remplir tout les champs");
+//     } else {
+//         //creatind a contact in LocalStorage
+//         localStorage.setItem("contact", JSON.stringify(contact));
 
 
         //adding a condition to get sure that there are products in a cart
-        if (localStor && localStor.length) {
-            for (let articleSelect of localStor) {
-                products.push(articleSelect.id)
-            };
+        // if (localStor && localStor.length) {
+        //     for (let articleSelect of localStor) {
+        //         products.push(articleSelect.id)
+        //     };
 
-            let order = {
-                contact: contact,
-                products: products,
-            };
+        //     let order = {
+        //         contact: contact,
+        //         products: products,
+        //     };
 
-            //fetch with POST 
-            //using a methode http body 
+        //fetch with POST 
+        //using a methode http body 
 
-            fetch("http://localhost:3000/api/products/order", {
-                method: "POST",
-                body: JSON.stringify(order),
-                headers: {
-                    "Accept": "application/json",
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    let orderId = data.orderId;
-                    window.location.assign("confirmation.html?id=" + orderId)
+        // fetch("http://localhost:3000/api/products/order", {
+        //     method: "POST",
+        //     body: JSON.stringify(order),
+        //     headers: {
+        //         "Accept": "application/json",
+        //         'Content-Type': 'application/json'
+        //     },
+        // })
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         let orderId = data.orderId;
+        //         window.location.assign("confirmation.html?id=" + orderId)
 
-                });
-            //if cart is empty     
-        } else {
-            alert("Votre panier est vide");
-            location.reload();
-        }
-    }
-});
+        //     });
+        //if cart is empty     
+        // } else {
+        //     alert("Votre panier est vide");
+        //     location.reload();
+        // }
+//     }
+// });
 //----------------------------------------------------
 // buttonEmptyCart.addEventListener("click", () => {
 //     localStorage.clear();
