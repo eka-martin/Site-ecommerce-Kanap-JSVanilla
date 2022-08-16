@@ -60,12 +60,14 @@ btn_envoyerPanier.addEventListener('click', (e) => {
 
 
     //------------------------------------------------------
-    //creating a product in localStorage
+    //---------creating a product in localStorage-----------
     //------------------------------------------------------
 
+
+    //-------------------------------------------------------
     let products = JSON.parse(localStorage.getItem('product'));
 
-    if (products !== null) {
+    if (products != null) {
         let foundProduct = products.find(product => (product.idProduit === id && product.color === document.getElementById('colors').selectedOptions[0].value));
         console.log(foundProduct);
 
@@ -84,9 +86,15 @@ btn_envoyerPanier.addEventListener('click', (e) => {
             //console.log('prr');
 
         }
+    } else {
+        products = [];
+        products.push(optionProduit);
+        localStorage.setItem("product", JSON.stringify(products));
+        //console.log('prr');
+
 
     }
-
+    //--------------------------------------------------------------------
 
     // let produitInCart = [];
 

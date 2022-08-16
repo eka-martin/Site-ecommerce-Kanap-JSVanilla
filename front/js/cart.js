@@ -97,13 +97,13 @@ for (let item of localStor) {
 
             let deleteItem = document.querySelectorAll(".deleteItem");
 
-            for (let k = 0; k < deleteItem.length; k++) {
-                deleteItem[k].addEventListener("click", (event) => {
+            for (let i = 0; i < deleteItem.length; i++) {
+                deleteItem[i].addEventListener("click", (event) => {
                     event.preventDefault()
 
                     //Je selectionne l'élément à modifier selon son Id et sa couleur
-                    let deleteId = localStor[k].id;
-                    let deleteColor = localStor[k].color;
+                    let deleteId = localStor[i].id;
+                    let deleteColor = localStor[i].color;
 
                     localStor = localStor.filter(
                         (element) => element.id !== deleteId || element.color !== deleteColor);
@@ -114,23 +114,24 @@ for (let item of localStor) {
                 })
             }
 
+
             // La modification la quantité d'un produit dans le panier
 
             let itemModif = document.querySelectorAll(".itemQuantity");
 
 
-            for (let j = 0; j < itemModif.length; j++) {
-                itemModif[j].addEventListener("change", (event) => {
+            for (let q = 0; q < itemModif.length; q++) {
+                itemModif[q].addEventListener("change", (event) => {
                     event.preventDefault()
                     //Je selectionne l'élément à modifier selon son Id et sa couleur
-                    let itemNew = localStor[j].quantity;
-                    let itemModifValue = itemModif[j].valueAsNumber;
+                    let itemNew = localStor[q].quantity;
+                    let itemModifValue = itemModif[q].valueAsNumber;
 
                     const result = localStor.filter(
                         (element) => element.itemModifValue !== itemNew);
 
                     result.quantity = itemModifValue;
-                    localStor[j].quantity = result.quantity;
+                    localStor[q].quantity = result.quantity;
 
                     localStorage.setItem("product", JSON.stringify(localStor));
 
@@ -142,10 +143,10 @@ for (let item of localStor) {
             //TotalPrice
             // On récupère la quantité totale
             let elementsQuantity = document.getElementsByClassName('itemQuantity');
-            let myLength = elementsQuantity.length;
+            //let myLength = elementsQuantity.length;
             totalQuantity = 0;
 
-            for (let i = 0; i < myLength; i++) {
+            for (let i = 0; i < elementsQuantity.length; i++) {
                 totalQuantity += elementsQuantity[i].valueAsNumber;
             }
 
@@ -157,7 +158,7 @@ for (let item of localStor) {
             let elementPrice = document.getElementsByClassName("product__price");
 
             totalPrice = 0;
-            for (let i = 0; i < myLength; i++) {
+            for (let i = 0; i < elementsQuantity.length; i++) {
                 let price = parseInt(elementPrice[i].innerHTML.split(" €")[0]);
                 totalPrice += (elementsQuantity[i].valueAsNumber * price);
 
@@ -176,13 +177,6 @@ for (let item of localStor) {
 //saisir les coordonnées puis de confirmer la commande
 // déclaration de contact et products 
 //https://www.youtube.com/watch?v=CreEhp8I-XA&list=PLeHV46kDFIhK6NlpLJqLxjVanTWMast_8&index=13
-let contact = {
-    firstName: "",
-    lastName: "",
-    address: "",
-    city: "",
-    email: "",
-};
 
 let formulaire = document.querySelector('.cart__order__form input[type= "submit"]');
 let inputs = document.querySelector(".cart__order__form__question");
@@ -221,6 +215,7 @@ const validFirstName = function (inputFirstName) {
     if (letterRegExp.test(inputFirstName.value)) {
         //si il n'y a pas de message d'erreur valid ok
         firstNameErrorMsg.textContent = "";
+        contact.firstName = inputFirstName.value;
         valid = true;
     } else {
         //si il y a un message d'erreur valide reste false
@@ -241,6 +236,7 @@ const validlastName = function (inputlastName) {
 
     if (letterRegExp.test(inputlastName.value)) {
         lastNameErrorMsg.textContent = "";
+        contact.lastName = inputlastName.value;
         valid = true;
     } else {
         lastNameErrorMsg.textContent = "le nom doit avoir 3 lettres minimum et pas de caractère spéciaux ou chiffres";
@@ -260,6 +256,7 @@ const validAddress = function (inputAddress) {
 
     if (addressRegExp.test(inputAddress.value)) {
         addressErrorMsg.textContent = "";
+        contact.address = inputAddress.value;
         valid = true;
     } else {
         addressErrorMsg.textContent = "veuillez rentrer une adresse valide, max 50 caractères";
@@ -278,6 +275,7 @@ const validCity = function (inputCity) {
 
     if (letterRegExp.test(inputCity.value)) {
         cityErrorMsg.textContent = "";
+        contact.city = inputCity.value;
         valid = true;
     } else {
         cityErrorMsg.textContent = "veuillez rentrer le nom de votre ville ou village sans le code postal";
@@ -297,6 +295,7 @@ const validEmail = function (inputEmail) {
 
     if (emailRegExp.test(inputEmail.value)) {
         emailErrorMsg.textContent = "";
+        contact.email = inputEmail.value;
         valid = true;
     } else {
         emailErrorMsg.textContent = "Email non valide, l'exemple canape@monmail.com";
@@ -308,71 +307,80 @@ const validEmail = function (inputEmail) {
 //------------------------------------------------------------
 //------------------------Button------------------------------
 //------------------------------------------------------------
+let contact = {
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    email: "",
+};
 
-// let products = [];
+let products = [];
+//listen orderButton
+let ordeButton = document.querySelector("#order").addEventListener("click", (e) => {
+    e.preventDefault();
+    if (
+        letterRegExp.test(firstName.value) == false ||
+        letterRegExp.test(lastName.value) == false ||
+        addressRegExp.test(address.value) == false ||
+        letterRegExp.test(city.value) == false ||
+        emailRegExp.test(email.value) == false
+    ) {
+        window.alert("Certains champs du formulaire sont manquants ou mal renseignés");
+    } else if (
+        firstName.value === "" ||
+        lastName.value === "" ||
+        address.value === "" ||
+        city.value === "" ||
+        email.value === ""
+    ) {
+        window.alert("Merci de remplir tout les champs");
+    } else {
+        //création contact sur LS
+        localStorage.setItem("contact", JSON.stringify(contact));
 
-// let ordeButton = document.querySelector("#order").addEventListener("click", (e) => {
-//     e.preventDefault();
-//     //if one of condition is false we cannot create a contact || OR
-//     if (
-//         letterRegExp.test(firstName.value) == false ||
-//         letterRegExp.test(lastName.value) == false ||
-//         addressRegExp.test(address.value) == false ||
-//         letterRegExp.test(city.value) == false ||
-//         emailRegExp.test(email.value) == false
-//     ) {
-//         window.alert("Certains champs du formulaire sont manquants");
-//     } else if (
-//         firstName.value === "" ||
-//         lastName.value === "" ||
-//         address.value === "" ||
-//         city.value === "" ||
-//         email.value === ""
-//     ) {
-//         window.alert("Merci de remplir tout les champs");
-//     } else {
-//         //creatind a contact in LocalStorage
-//         localStorage.setItem("contact", JSON.stringify(contact));
+
+        //Ajout d'une condition pour verifier s'il existe des produit dans le panier
+        if (localStor && localStor.length) {
+            for (let articleSelect of localStor) {
+                products.push(articleSelect.id)
+            };
+
+            let order = {
+                contact: contact,
+                products: products,
+            };
 
 
-        //adding a condition to get sure that there are products in a cart
-        // if (localStor && localStor.length) {
-        //     for (let articleSelect of localStor) {
-        //         products.push(articleSelect.id)
-        //     };
+            /** 
+             * fetch avec POST transforme JSON grace aux headers informations
+             * méthode http body = données que l'on souhaite envoyer
+            */
+            fetch("http://localhost:3000/api/products/order", {
+                method: "POST",
+                body: JSON.stringify(order),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then((res) => res.json())
+                .then((data) => {
 
-        //     let order = {
-        //         contact: contact,
-        //         products: products,
-        //     };
+                    //window.location.assign("confirmation.html?id=" + data.orderId)
+                    let confirmationUrl = "./confirmation.html?id=" + data.orderId;
+                    window.location.href = confirmationUrl;
+                });
 
-        //fetch with POST 
-        //using a methode http body 
+        }
+    }
+});
 
-        // fetch("http://localhost:3000/api/products/order", {
-        //     method: "POST",
-        //     body: JSON.stringify(order),
-        //     headers: {
-        //         "Accept": "application/json",
-        //         'Content-Type': 'application/json'
-        //     },
-        // })
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         let orderId = data.orderId;
-        //         window.location.assign("confirmation.html?id=" + orderId)
 
-        //     });
-        //if cart is empty     
-        // } else {
-        //     alert("Votre panier est vide");
-        //     location.reload();
-        // }
-//     }
-// });
-//----------------------------------------------------
+
+// ----------------------------------------------------
 // buttonEmptyCart.addEventListener("click", () => {
 //     localStorage.clear();
 
 // })
-//------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
