@@ -95,24 +95,52 @@ for (let item of localStor) {
             buttonEmptyCart.innerText = "Supprimer";
 
 
-            let deleteItem = document.querySelectorAll(".deleteItem");
+            //const deleteItem = document.querySelectorAll(".deleteItem");
+            console.log(data);
+            //deleteItem.forEach(function (el, i) {
+            buttonEmptyCart.addEventListener("click", (event) => {
+                event.preventDefault()
+                //let itemId = item.idProduit;
+                //let itemColor = item.color;
+                //Je selectionne l'élément à modifier selon son Id et sa couleur
+                //const deleteId = data.id;
+                //const deleteColor = localStor[i].color;
 
-            for (let i = 0; i < deleteItem.length; i++) {
-                deleteItem[i].addEventListener("click", (event) => {
-                    event.preventDefault()
+                localStor = localStor.filter(
+                    (element) => {
+                        console.log(element.idProduit !== itemId, element.color !== itemColor)
+                        return element.id !== itemId && element.color !== itemColor
+                    });
+                console.log(localStor);
+                localStorage.setItem("product", JSON.stringify(localStor));
 
-                    //Je selectionne l'élément à modifier selon son Id et sa couleur
-                    let deleteId = localStor[i].id;
-                    let deleteColor = localStor[i].color;
+                location.reload();// rafraichir la  page
+                //})
+            })
 
-                    localStor = localStor.filter(
-                        (element) => element.id !== deleteId || element.color !== deleteColor);
-                    localStorage.setItem("product", JSON.stringify(localStor));
 
-                    location.reload();// rafraichir la  page 
+            // for (let i = 0; i < deleteItem.length; i++) {
+            //     deleteItem[i].addEventListener("click", (event) => {
+            //         event.preventDefault()
 
-                })
-            }
+            //         //Je selectionne l'élément à modifier selon son Id et sa couleur
+            //         const deleteId = localStor[i].idProduit;
+            //         const deleteColor = localStor[i].color;
+            //         console.log(deleteColor, deleteId);
+            //         console.log(i);
+            //         console.log(localStor);
+            //         localStor = localStor.filter(
+            //             (element) => {
+            //                 console.log(element.idProduit !== deleteId, element.color !== deleteColor)
+            //                 return element.id !== deleteId && element.color !== deleteColor
+            //             });
+            //         console.log(localStor);
+            //         localStorage.setItem("product", JSON.stringify(localStor));
+
+            //         location.reload();// rafraichir la  page 
+
+            //     })
+            // }
 
 
             // La modification la quantité d'un produit dans le panier
@@ -317,7 +345,7 @@ let contact = {
 
 let products = [];
 //listen orderButton
-let ordeButton = document.querySelector("#order").addEventListener("click", (e) => {
+let orderButton = document.querySelector("#order").addEventListener("click", (e) => {
     e.preventDefault();
     if (
         letterRegExp.test(firstName.value) == false ||
@@ -336,14 +364,14 @@ let ordeButton = document.querySelector("#order").addEventListener("click", (e) 
     ) {
         window.alert("Merci de remplir tout les champs");
     } else {
-        //création contact sur LS
+        //création contact sur LocalStorage
         localStorage.setItem("contact", JSON.stringify(contact));
 
 
-        //Ajout d'une condition pour verifier s'il existe des produit dans le panier
+        //Si le panier n'est pas vide
         if (localStor && localStor.length) {
             for (let articleSelect of localStor) {
-                products.push(articleSelect.id)
+                products.push(articleSelect.idProduit)
             };
 
             let order = {
@@ -352,13 +380,15 @@ let ordeButton = document.querySelector("#order").addEventListener("click", (e) 
             };
 
 
-            /** 
-             * fetch avec POST transforme JSON grace aux headers informations
-             * méthode http body = données que l'on souhaite envoyer
-            */
+            // ----------------------------------------------------------------
+            // fetch avec POST transforme JSON grace aux headers informations
+            // méthode http body 
+            // ----------------------------------------------------------------
+            console.log('test2');
             fetch("http://localhost:3000/api/products/order", {
                 method: "POST",
                 body: JSON.stringify(order),
+
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -366,7 +396,8 @@ let ordeButton = document.querySelector("#order").addEventListener("click", (e) 
             })
                 .then((res) => res.json())
                 .then((data) => {
-
+                    console.log(data);
+                    console.log('test');
                     //window.location.assign("confirmation.html?id=" + data.orderId)
                     let confirmationUrl = "./confirmation.html?id=" + data.orderId;
                     window.location.href = confirmationUrl;
