@@ -96,7 +96,6 @@ for (let item of localStor) {
 
 
             //const deleteItem = document.querySelectorAll(".deleteItem");
-            console.log(data);
             //deleteItem.forEach(function (el, i) {
             buttonEmptyCart.addEventListener("click", (event) => {
                 event.preventDefault()
@@ -108,43 +107,19 @@ for (let item of localStor) {
 
                 localStor = localStor.filter(
                     (element) => {
-                        console.log(element.idProduit !== itemId, element.color !== itemColor)
+                        //console.log(element.idProduit !== itemId, element.color !== itemColor)
                         return element.id !== itemId && element.color !== itemColor
                     });
-                console.log(localStor);
+                //console.log(localStor);
                 localStorage.setItem("product", JSON.stringify(localStor));
 
                 location.reload();// rafraichir la  page
                 //})
             })
 
-
-            // for (let i = 0; i < deleteItem.length; i++) {
-            //     deleteItem[i].addEventListener("click", (event) => {
-            //         event.preventDefault()
-
-            //         //Je selectionne l'élément à modifier selon son Id et sa couleur
-            //         const deleteId = localStor[i].idProduit;
-            //         const deleteColor = localStor[i].color;
-            //         console.log(deleteColor, deleteId);
-            //         console.log(i);
-            //         console.log(localStor);
-            //         localStor = localStor.filter(
-            //             (element) => {
-            //                 console.log(element.idProduit !== deleteId, element.color !== deleteColor)
-            //                 return element.id !== deleteId && element.color !== deleteColor
-            //             });
-            //         console.log(localStor);
-            //         localStorage.setItem("product", JSON.stringify(localStor));
-
-            //         location.reload();// rafraichir la  page 
-
-            //     })
-            // }
-
-
+            //--------------------------------------------------------
             // La modification la quantité d'un produit dans le panier
-
+            //--------------------------------------------------------
             let itemModif = document.querySelectorAll(".itemQuantity");
 
 
@@ -384,7 +359,7 @@ let orderButton = document.querySelector("#order").addEventListener("click", (e)
             // fetch avec POST transforme JSON grace aux headers informations
             // méthode http body 
             // ----------------------------------------------------------------
-            console.log('test2');
+            //console.log('test2');
             fetch("http://localhost:3000/api/products/order", {
                 method: "POST",
                 body: JSON.stringify(order),
@@ -396,8 +371,8 @@ let orderButton = document.querySelector("#order").addEventListener("click", (e)
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
-                    console.log('test');
+                    //console.log(data);
+                    //console.log('test');
                     //window.location.assign("confirmation.html?id=" + data.orderId)
                     let confirmationUrl = "./confirmation.html?id=" + data.orderId;
                     window.location.href = confirmationUrl;

@@ -49,51 +49,52 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
 const btn_envoyerPanier = document.getElementById('addToCart');
 btn_envoyerPanier.addEventListener('click', (e) => {
-    e.preventDefault();
-    //Creating an object with values
-    let optionProduit = {
-        idProduit: id,
-        color: document.getElementById('colors').selectedOptions[0].value,
-        quantity: document.getElementById('quantity').value,
+    if (document.querySelector("#quantity").value > 0 && document.querySelector("#quantity").value <= 100 && document.querySelector("#colors").value !== '') {
+        // Actions a mener si l'utilisateur a bien saisie une quantité et une couleur :
+        e.preventDefault();
+        //Creating an object with values
+        let optionProduit = {
+            idProduit: id,
+            color: document.getElementById('colors').selectedOptions[0].value,
+            quantity: document.getElementById('quantity').value,
 
-    };
+        };
 
+        //------------------------------------------------------
+        //---------creating a product in localStorage-----------
+        //------------------------------------------------------
 
-    //------------------------------------------------------
-    //---------creating a product in localStorage-----------
-    //------------------------------------------------------
+        let products = JSON.parse(localStorage.getItem('product'));
 
-
-    //-------------------------------------------------------
-    let products = JSON.parse(localStorage.getItem('product'));
-
-    if (products != null) {
-        let foundProduct = products.find(product => (product.idProduit === id && product.color === document.getElementById('colors').selectedOptions[0].value));
-        console.log(foundProduct);
-
-        //console.log('bzz');
-
-
-        if (products != null && foundProduct !== undefined) {
-            let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
-            foundProduct.quantity = addQuantity;
-            console.log(addQuantity);
+        if (products != null) {
+            let foundProduct = products.find(product => (product.idProduit === id && product.color === document.getElementById('colors').selectedOptions[0].value));
+            console.log(foundProduct);
             //console.log('bzz');
-            localStorage.setItem("product", JSON.stringify(products));
+
+
+            if (products != null && foundProduct !== undefined) {
+                let addQuantity = parseInt(optionProduit.quantity) + parseInt(foundProduct.quantity);
+                foundProduct.quantity = addQuantity;
+                console.log(addQuantity);
+                //console.log('bzz');
+                localStorage.setItem("product", JSON.stringify(products));
+            } else {
+                products.push(optionProduit);
+                localStorage.setItem("product", JSON.stringify(products));
+                //console.log('prr');
+
+            }
         } else {
+            products = [];
             products.push(optionProduit);
             localStorage.setItem("product", JSON.stringify(products));
             //console.log('prr');
 
+
         }
-    } else {
-        products = [];
-        products.push(optionProduit);
-        localStorage.setItem("product", JSON.stringify(products));
-        //console.log('prr');
-
-
-    }
+    } else //Informer l'utilisateur de devoir rentrer une quantité  et ainsi q'une couleur
+        alert("Merci de bien vouloir selectioner une couleur ainsi q'une quantité");
+})
     //--------------------------------------------------------------------
 
     // let produitInCart = [];
@@ -105,23 +106,8 @@ btn_envoyerPanier.addEventListener('click', (e) => {
     // produitInCart.push(optionProduit);
     // localStorage.setItem('product', JSON.stringify(produitInCart));
 
-
-
-
-
     //     // for mozilla
     //     // window.location.href = "cart.html";
-
-})
-
-
-
-
-
-
-
-
-
 
 //https://stackoverflow.com/questions/54268951/react-fetchapi-how-to-take-data-from-related-json-by-id
 
