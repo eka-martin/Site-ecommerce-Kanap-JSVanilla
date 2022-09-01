@@ -77,6 +77,8 @@ btn_envoyerPanier.addEventListener('click', (e) => {
                 foundProduct.quantity = addQuantity;
                 console.log(addQuantity);
                 //console.log('bzz');
+                //La méthode JSON.stringify() convertit une valeur JavaScript en chaîne JSON
+                //pour sauvgarder le data sur le server
                 localStorage.setItem("product", JSON.stringify(products));
             } else {
                 products.push(optionProduit);

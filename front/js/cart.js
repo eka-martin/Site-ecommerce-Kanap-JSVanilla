@@ -7,7 +7,7 @@ let localStor = JSON.parse(localStorage.getItem('product'));
 console.table(localStor);
 // let cart = document.querySelector('.cart');
 
-//inerating localStorage
+//iterating localStorage
 for (let item of localStor) {
 
     let itemId = item.idProduit;
