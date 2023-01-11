@@ -7,6 +7,7 @@ l’implémentation du site ecommerce statique de Kanap de manière dynamique. 4
 Gérer des événements JavaScript
 <br>
 Interagir avec un web service avec JavaScript
+<br>
 Valider des données issues de sources externes
 
 Démarrage de projet
