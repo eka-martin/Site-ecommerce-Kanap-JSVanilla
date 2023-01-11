@@ -2,9 +2,10 @@
 
 l’implémentation du site ecommerce statique de Kanap de manière dynamique. 4 pages ont été mises en place : page d’accueil, page Produit, page Panier et la page Confirmation. Intégrantion dynamiquement les éléments de l’API dans les différentes pages web avec JSVanilla
 
-Compétences 
-
+<b>Compétences</b> 
+<br>
 Gérer des événements JavaScript
+<br>
 Interagir avec un web service avec JavaScript
 Valider des données issues de sources externes
 
